@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <link href="css/font-awesome.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="/validation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
+</link>
+</head>
+<style>
+  label{
+    font-size: 1.2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:color-mix(in srgb, #FF758F 95%,  rgb(89, 89, 89));
+  }
+  .fa-solid{
+            color: white;
+            font-size: 1.5rem;
+        }
+  .fa-solid:hover{
+            color: #c1325a;
+            font-size: 1.5rem;
+        }
+  p{
+    font-size: 1.2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:color-mix(in srgb, #FF758F 85%, rgb(89, 89, 89));
+  }
+  #btnwishlist{
+            color: white;
+            font-weight: bold;
+            width: 15rem;
+            height:3rem;
+            background-color: #c1325a;
+            /* padding-right: 0.5rem; */
+
+        }
+        #btnwishlist:hover{
+            background-color: #c58d9778;
+        }
+        button[type='submit']{
+          color: white;
+            font-weight: bold;
+            width: 10rem;
+            height:3rem;
+            background-color: #c1325a;
+            border: none;
+        }
+        button[type='submit']:hover{
+          background-color: #c58d97;;
+        }
+</style>
+
+<body>
+  <div class="container" id="mainapp">
+    <div class="row">
+      <div class="container d-flex justify-content-between p-2 align-items-baseline"
+        style="background-color:#FF758F; border-bottom-left-radius: 1.5rem; border-bottom-right-radius: 1.5rem; border: none; box-shadow: 3px 3px 3px lightcoral,3px 3px 5px lightblue; margin-top: 0rem;">
+        <div>
+          <a id="icon" href="#" @click.prevent="toggleInfoDisplay"
+            style="text-decoration: none; color: crimson; margin-left: 1rem;"><i class="fa-solid fa-book"></i></a>
+        </div>
+        <div class="d-flex align-items-baseline" style="margin-right: 1rem;">
+          <p id="itemnavbar" class="px-2 my-2"></p>
+          <button id="btnwishlist" class="btn px-2" @click="toggleInfoDisplay" ><i
+              class="fa-regular fa-heart px-2"></i>See your information</button>
+        </div>
+      </div>
+    </div>
+    <form @submit.prevent="submitForm" class="row needs-validation" novalidate v-if="!infoDisplayed">
+      <div class="col-12 pt-3">
+        <label for="validationCustom01" class="form-label">First name</label>
+        <input type="text" name='name' class="form-control" id="validationCustom01" value="Mark" required
+          pattern="[a-zA-Z]+" title="First name must contain only letters and not use spaces" v-model="post.first"
+          @invalid="handleInvalidInput" @change="clearCustomValidity">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback" v-if="!isNameValid">
+          Please Enter Your first name and should begin with letter
+        </div>
+      </div>
+      <div class="col-12 pt-3">
+        <label for="validationCustom02" class="form-label">Last name</label>
+        <input type="text" name='name' class="form-control" id="validationCustom02" value="Otto" required
+          pattern="[a-zA-Z]+" title="last name must contain only letters and not use spaces" v-model="post.last"
+          @invalid="handleInvalidInput" @change="clearCustomValidity">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback" v-if="!isNameValid">
+          Please Enter Your last name and should begin with letter
+        </div>
+      </div>
+
+      <div class="col-12 pt-3 pl-3">
+        <label for="validationCustom04" class="form-label pr-3">
+          <p>City
+          <p>
+        </label>
+        <select class="form-select" id="validationCustom04" required name="city" v-model="post.city">
+          <option :value="city" v-for="city in postdata.cities">{{city}}</option>
+        </select>
+        <div class="invalid-feedback" v-if="!isNameValid">Please select a state.</div>
+      </div>
+      <div class="col-md-12" style="margin-bottom: 1rem;">
+        <p>Choose Your Fav platform
+        </p>
+        <div class="form-check" v-for="media in postdata.shareonsocial">
+          <input class="form-check-input" type="checkbox" :value="media" v-model="post.shareon" required>
+          <label>
+            {{media}}
+          </label>
+
+        </div>
+
+      </div>
+      <div class="col-md-12" style="margin-bottom: 1rem;">
+        <p>Enter Your Gender
+        <p>
+        <div class="form-check" v-for="selectgender in postdata.persongender">
+          <input class="form-radio-input pr-5" type="radio" :value="selectgender" required v-model="post.gender">
+          <label class="form-radio-label" style="margin-left: 0.8rem; padding-right: 1rem;">
+            {{selectgender}}
+          </label>
+
+        </div>
+
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit form</button>
+      </div>
+    </form>
+
+    <!-- Information display section -->
+    <div v-if="infoDisplayed" class="row my-3">
+      <div class="col">
+        <h2 style="color: #FF758F;">Your Information</h2>
+        <p>First Name: {{ submittedInfo.first }}</p>
+        <p>Last Name: {{ submittedInfo.last }}</p>
+        <p>City: {{ submittedInfo.city }}</p>
+        <p>Fav Media: {{ submittedInfo.shareon}}</p>
+        <p>Gender: {{ submittedInfo.gender }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data: () => ({
+        post: {
+          first: "",
+          last: "",
+          shareon: [],
+          gender: '',
+          city: "",
+        },
+        postdata: {
+          hoppies: ["reading", "swimming", "dance"],
+          shareonsocial: ['Facebook', 'Twitter', 'Insta'],
+          cities: ['Mansoura', 'Alex', 'Tanta'],
+          persongender: ['female', 'male'],
+        },
+        infoDisplayed: false,
+        submittedInfo: {},
+        
+      }),
+      methods: {
+
+        toggleInfoDisplay() {
+          this.infoDisplayed = !this.infoDisplayed;
+        },
+        submitForm() {
+          // Save submitted information
+          this.submittedInfo = { ...this.post };
+        },
+        clearCustomValidity(event) {
+          event.target.setCustomValidity('');
+          this.isNameValid = true; // Reset the flag when input is changed
+        },
+      },
+    });
+    app.mount("#mainapp");
+  </script>
+</body>
+
+</html>
