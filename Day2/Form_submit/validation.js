@@ -10,16 +10,4 @@ window.onload=function(){
       }, false)
   }
 
-  // let fname = document.getElementById("validationCustom01");
-  // fname.addEventListener('input', function () {
-  //     fname.value = fname.value.trim();
-  // })
-  // let lname = document.getElementById("validationCustom02");
-  // lname.addEventListener('input', function () {
-  //     lname.value = lname.value.trim();
-  // })
-  // let Username = document.getElementById("validationCustomUsername");
-  // Username.addEventListener('input', function () {
-  //     Username.value = Username.value.trim();
-  // })
 }
